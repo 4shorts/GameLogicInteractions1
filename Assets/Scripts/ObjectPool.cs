@@ -4,18 +4,41 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool SharedInstance;
-    public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
-    public int amountToPool;
+    private List<GameObject> activePooledObjects;
+    private List<GameObject> pooledObjects;
+    [SerializeField]
+    private GameObject objectToPool;
+    [SerializeField]
+    private int amountToPool;
+    
+
+    private static ObjectPool _instance;
+    public static ObjectPool Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Object Pool is NULL");
+            }
+            return _instance; 
+        }
+    }
+
+    public void Awake()
+    {
+        _instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
         pooledObjects = new List<GameObject>();
+        activePooledObjects = new List<GameObject>();
         GameObject tmp;
-        for (int i = 0; i < pooledObjects.Count; i++)
+        for (int i = 0; i < amountToPool; i++)
         {
-            tmp = Instantiate(objectToPool);
+            tmp = Instantiate(objectToPool, Vector3.zero, Quaternion.identity, this.transform);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }
@@ -23,14 +46,17 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject GetPooledObject()
     {
-        for (int i = 0; i < pooledObjects.Count; i++)
+        if (pooledObjects.Count > 0)
         {
-            if (!pooledObjects[i].activeInHierarchy)
-            {
-                return pooledObjects[i];
-            }
+            GameObject tmp = pooledObjects[0];
+            activePooledObjects.Add(pooledObjects[0]);
+            pooledObjects.Remove(pooledObjects[0]);
+            return tmp;
         }
-        return null;
+        else
+        {
+            return null;
+        }
     }
 
     

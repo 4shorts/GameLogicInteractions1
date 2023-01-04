@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private bool _isGameOver;
+    private int _agentCount;
 
     private static GameManager _instance;
 
@@ -46,5 +47,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager::GameOver() Called");
         _isGameOver = true;
+    }
+
+    
+    public void Count()
+    {
+        _agentCount++;
+        if (_agentCount == 10)
+        {
+            UIManager.Instance.LoseConditonSequence();
+        }
     }
 }

@@ -25,6 +25,8 @@ public class AI : MonoBehaviour
     private Animator _anim;
     [SerializeField]
     private int _agentCount = 0;
+    
+  
   
  
 
@@ -33,6 +35,7 @@ public class AI : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
+        
 
         if (_anim == null)
         {
@@ -79,6 +82,7 @@ public class AI : MonoBehaviour
                 }
                 if (_hidingPlace.Count-1 == _currentHidingPlace)
                 {
+                    GameManager.Instance.Count();
                     _agent.gameObject.SetActive(false);
                 }
 
@@ -126,12 +130,11 @@ public class AI : MonoBehaviour
 
     }
 
-    public void LoseCondition()
+    
+
+    public void RobotShot()
     {
-        if (_agentCount == 10)
-        {
-            UIManager.Instance.LoseConditonSequence();
-        }
+        _currentState = AIState.Death;
     }
 
 

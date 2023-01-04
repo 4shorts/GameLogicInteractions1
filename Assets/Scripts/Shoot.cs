@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    private AI _AI;
+    
     [SerializeField]
     private int _score = 50;
     [SerializeField]
@@ -15,7 +15,7 @@ public class Shoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _AI = GetComponent<AI>();
+       
     }
 
     // Update is called once per frame
@@ -25,6 +25,7 @@ public class Shoot : MonoBehaviour
         {
             ShootBarriers();
             ShootRobots();
+            ShootBarrels();
         }
     }
 
@@ -40,6 +41,8 @@ public class Shoot : MonoBehaviour
             if (hitInfo.collider != null)
             {
                 hitInfo.collider.gameObject.SetActive(false);
+                //Barrier barrier = hitInfo.collider.GetComponent<Barrier>();
+                //barrier.BarrierShot();
             }
 
         }
@@ -47,20 +50,45 @@ public class Shoot : MonoBehaviour
 
     public void ShootRobots()
     {
-        Ray rayOrigin = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
-        RaycastHit hitInfo;
-        if (Physics.Raycast(rayOrigin, out hitInfo, Mathf.Infinity, 1 << 6))
         {
-            Debug.Log("hit robot");
-            hitInfo.collider.GetComponent<Collider>();
-            if (hitInfo.collider != null)
+            Ray rayOrigin = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+            RaycastHit hitInfo;
+            if (Physics.Raycast(rayOrigin, out hitInfo, Mathf.Infinity, 1 << 6))
             {
-                AddScore(50);
-                removeAI(-1);
-                hitInfo.collider.gameObject.SetActive(false);
+                Debug.Log("hit robot");
+                
+                //Collider other = hitInfo.collider.GetComponent<Collider>();
+                if (hitInfo.collider != null)
+                {
+                    AddScore(50);
+                    removeAI(-1);
+                    //hitInfo.collider.gameObject.SetActive(false);
+                    AI ai = hitInfo.collider.GetComponent<AI>();
+                    ai.RobotShot();
+                }
             }
         }
     }
+
+    public void ShootBarrels()
+    {
+        Ray rayOrigin = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+        RaycastHit hitInfo;
+        if (Physics.Raycast(rayOrigin, out hitInfo, Mathf.Infinity, 1 << 8))
+        {
+            Debug.Log("hit barrel");
+            //hitInfo.collider.GetComponent<BoxCollider>();
+            if (hitInfo.collider != null)
+            {
+                Barrel barrel = hitInfo.collider.GetComponent<Barrel>();
+                barrel.Explode();
+            }
+        }
+    }
+
+    
+
+    
 
     public void AddScore(int points)
     {
@@ -82,10 +110,5 @@ public class Shoot : MonoBehaviour
         {
             UIManager.Instance.WinConditionSequence();
         }
-    }
-
-    public void LossCondition()
-    {
-
-    }
+    } 
 }

@@ -8,7 +8,11 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private bool _isGameOver;
+    [SerializeField]
     private int _agentCount;
+    private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _audioClip;
 
     private static GameManager _instance;
 
@@ -52,7 +56,18 @@ public class GameManager : MonoBehaviour
     
     public void Count()
     {
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource in GameManager is NULL");
+        }
+        else
+        {
+            _audioSource.clip = _audioClip;
+        }
+        
         _agentCount++;
+        _audioSource.Play();
         if (_agentCount == 10)
         {
             UIManager.Instance.LoseConditonSequence();

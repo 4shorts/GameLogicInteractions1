@@ -23,8 +23,8 @@ public class AI : MonoBehaviour
   
     private float _speed = 4.0f;
     private Animator _anim;
-    [SerializeField]
-    private int _agentCount = 0;
+    
+    
     
   
   
@@ -33,6 +33,7 @@ public class AI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
         

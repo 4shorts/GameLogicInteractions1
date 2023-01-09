@@ -28,7 +28,7 @@ public class Barrel : MonoBehaviour
     public void Explode()
     {
         _explosionBarrel.SetActive(true);
-        
+        ExplostionDamage(transform.position, 5f);
         StartCoroutine(ExplosionTimer());
     }
 
@@ -45,6 +45,17 @@ public class Barrel : MonoBehaviour
 
     public void ExplostionDamage(Vector3 center, float radius)
     {
+        //AI ai = GetComponent<AI>();
+        Collider[] hitCollider = Physics.OverlapSphere(center, radius);
+        foreach (Collider collider in hitCollider)
+        {
+            AI ai = collider.GetComponent<AI>();
+            if (ai != null)
+            {
+                ai.RobotShot();
+            }
+        }
+
 
     }
 

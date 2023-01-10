@@ -5,7 +5,7 @@ using UnityEngine;
 public class Barrier : MonoBehaviour
 {
 
-    //private GameObject _barrier;
+   
     private AudioSource _audioSource;
     [SerializeField]
     private AudioClip _barrierShot;
@@ -29,12 +29,17 @@ public class Barrier : MonoBehaviour
 
     public void BarrierShot()
     {
+        StartCoroutine(BarrierShotRoutine());
+       
+    }
 
-        //_barrier = GameObject.FindWithTag("barrier");
-        
+    IEnumerator BarrierShotRoutine()
+    {
+        yield return new WaitForSeconds(.45f);
         _audioSource.Play();
-        Debug.Log("Barrier sound played");
+        yield return new WaitForSeconds(0.3f);
         this.gameObject.SetActive(false);
+        
     }
 
 

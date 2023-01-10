@@ -13695,6 +13695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isGameOver: 0
+  _agentCount: 0
   _audioClip: {fileID: 8300000, guid: 8f1ddff091f46c44d9c15f48f46b89c4, type: 3}
 --- !u!4 &340874342
 Transform:
@@ -20363,7 +20364,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c7043447f1b98db40848c0565817a55e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.193
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -31801,7 +31802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c79f328133cab4eb3ad2b4c13f8b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barrierShot: {fileID: 8300000, guid: 6365cb1d73b4d6e479dfa7b18a303062, type: 3}
+  _barrierShot: {fileID: 8300000, guid: 5681215a2f9086f46adbd52c11782421, type: 3}
   _renderer: {fileID: 0}
 --- !u!82 &889263866
 AudioSource:
@@ -31824,9 +31825,9 @@ AudioSource:
   Priority: 0
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -31859,7 +31860,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
